@@ -6,7 +6,7 @@
     <description>Recent content on FFhy-学习记录</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 16 Nov 2019 22:59:45 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 20 Nov 2019 00:34:33 +0800</lastBuildDate>
     
 	<atom:link href="https://ffhy.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -18,6 +18,15 @@
       
       <guid>https://ffhy.github.io/about/</guid>
       <description>FFhy的个人学习记录。 主要包括： Python Java 数据库 数据挖掘 深度学习 数据分析</description>
+    </item>
+    
+    <item>
+      <title>利用Python进行数据分析01：Numpy</title>
+      <link>https://ffhy.github.io/post/python_data_analysis01_numpy/</link>
+      <pubDate>Wed, 20 Nov 2019 00:34:33 +0800</pubDate>
+      
+      <guid>https://ffhy.github.io/post/python_data_analysis01_numpy/</guid>
+      <description>Numpy基础 ndarray—Numpy的数组对象 比python内建列表处理数据更快且使用内存更少。 ndarray是一个多维、同类型容器。 n</description>
     </item>
     
     <item>
