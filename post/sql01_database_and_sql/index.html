@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>SQL基础教程01：数据库和SQL - FFhy-学习记录</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="FFhy" /><meta name="description" content="内容：数据库管理系统、SQL语句分类、表的基本操作。
+来源：《SQL基础教程》(第二版) &amp;ensp; [日] MICK/著 &amp;ensp;&amp;ensp; 孙淼 罗勇/译
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1 with theme even" />
+
+
+<link rel="canonical" href="https://ffhy.github.io/post/sql01_database_and_sql/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="SQL基础教程01：数据库和SQL" />
+<meta property="og:description" content="内容：数据库管理系统、SQL语句分类、表的基本操作。
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ffhy.github.io/post/sql01_database_and_sql/" />
+<meta property="article:published_time" content="2019-11-15T14:59:23+08:00" />
+<meta property="article:modified_time" content="2019-11-15T14:59:23+08:00" />
+<meta itemprop="name" content="SQL基础教程01：数据库和SQL">
+<meta itemprop="description" content="内容：数据库管理系统、SQL语句分类、表的基本操作。
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译">
+
+
+<meta itemprop="datePublished" content="2019-11-15T14:59:23&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-15T14:59:23&#43;08:00" />
+<meta itemprop="wordCount" content="1564">
+
+
+
+<meta itemprop="keywords" content="SQL," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SQL基础教程01：数据库和SQL"/>
+<meta name="twitter:description" content="内容：数据库管理系统、SQL语句分类、表的基本操作。
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">FFhy</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">FFhy</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">SQL基础教程01：数据库和SQL</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-11-15 </span>
+        <div class="post-category">
+            <a href="/categories/database/"> Database </a>
+            </div>
+          <span class="more-meta"> 约 1564 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#数据库和sql">数据库和SQL</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>内容：数据库管理系统、SQL语句分类、表的基本操作。<br />
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译</p>
+
+<h1 id="数据库和sql">数据库和SQL</h1>
+
+<p><strong>DBMS(数据库管理系统)种类：</strong></p>
+
+<ul>
+<li><em>层次数据库</em>（Hierarchical Database，HDB）最早的数据库之一</li>
+<li><em>关系数据库</em>（Relational Database，RDB）由行和列组成的二维表来管理数据。使用专门的SQL（Structured Query Language，结构化查询语言）对数据进行操作。</li>
+<li><em>面向对象数据库</em>（Object Oriented Database，OODB）把数据以及对数据的操作集合起来以对象为单位进行管理。</li>
+<li><em>XML数据库</em>（XML Database，XMLDB）对XML 形式的大量数据进行高速处理。</li>
+<li><em>键值存储系统</em>（Key-Value Store，KVS）单纯用来保存查询所使用的主键（Key）和值（Value）的组合的数据库。<br /></li>
+</ul>
+
+<p><strong>SQL语句分类</strong></p>
+
+<p>根据对RDBMS （关系型数据库管理系统）赋予的指令种类的不同，SQL 语句可以分为以下三类。</p>
+
+<ul>
+<li><em>DDL</em>（Data Definition Language，数据定义语言） 用来创建或者删除存储数据用的数据库以及数据库中的表等对象。<code>CREATE、DROP、ALTER</code>。</li>
+<li><em>DML</em>（Data Manipulation Language，数据操纵语言） 用来查询或者变更表中的记录，<code>SELECT, INSERT, UPDATE, DELETE</code>。</li>
+<li><em>DCL</em>（Data Control Language，数据控制语言） 用来确认或者取消对数据库中的数据进行的变更。以对RDBMS 的用户是否有权限操作数据库中的对象（数据库表等）进行设定，<code>COMMIT, ROLLBACK, GRANT,REVOKE</code>。</li>
+</ul>
+
+<p><strong>基本书写规则：</strong></p>
+
+<ul>
+<li>分号<code>;</code> 结尾、不区分大小写。</li>
+<li>常数的书写方式是固定的，字符串用<code>单引号</code>括起来；日期同样使用单引号，格式有很多/分隔 -分隔等。</li>
+</ul>
+
+<p><strong>数据库的创建：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="o">&lt;</span><span class="err">数据库名称</span><span class="o">&gt;</span><span class="p">;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>表的创建</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="err">表名</span><span class="o">&gt;</span> <span class="p">(</span><span class="o">`</span>
+<span class="o">&lt;</span><span class="err">列名</span><span class="mi">1</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">数据类型</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">该列所需约束</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="o">&lt;</span><span class="err">列名</span><span class="mi">2</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">数据类型</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">该列所需约束</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="o">&lt;</span><span class="err">列名</span><span class="mi">3</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">数据类型</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">该列所需约束</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="p">......</span> 
+<span class="o">&lt;</span><span class="err">该表的约束</span><span class="mi">1</span><span class="o">&gt;</span><span class="err">，</span> <span class="o">&lt;</span><span class="err">该表的约束</span><span class="mi">2</span><span class="o">&gt;</span><span class="err">，……</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>数据类型设置：</strong></p>
+
+<ul>
+<li><code>INTEGER</code>型，用来指定存储整数的列的数据类型（数字型），不能存储小数。</li>
+<li><code>CHAR</code> 是CHARACTER（字符）的缩写，是用来指定存储字符串的列的数据类型（字符型），例CHAR(10)。字符串以 定长字符串 的形式存储在被指定为CHAR 型的列中，就是当列中存储的字符串长度达不到最大长度的时候，使用半角空格进行补足。</li>
+<li><code>VARCHAR</code>也是用来指定存储字符串的列的数据类型（字符串类型），也可以通过括号内的数字来指定字符串的长度（最大长度）。但该类型的列是以<code>可变长字符串</code> 的形式来保存字符串的。</li>
+<li><code>DATE</code>型，用来指定存储日期（年月日）的列的数据类型（日期型）。<br /></li>
+</ul>
+
+<p><strong>约束设置：</strong></p>
+
+<ul>
+<li>非空约束，<code>NOT NULL</code>。</li>
+<li>主键约束，所谓键，就是在指定特定数据时使用的列的组合。键种类多样，主键（primary key）就是可以特定一行数据的列。定义列的那行加上<code>PRIMARY KEY</code>或在最后<code>PRIMARY KEY (column)</code>。</li>
+</ul>
+
+<p><strong>表的删除：</strong></p>
+
+<p><code>DROP TABLE &lt;表名&gt;;</code></p>
+
+<p>删除了的表是无法恢复的。</p>
+
+<p><strong>表的更新：</strong></p>
+
+<ul>
+<li>添加列：<code>ALTER TABLE &lt;表名&gt; ADD COLUMN &lt;列的定义&gt;;</code></li>
+<li>删除列：<code>ALTER TABLE &lt;表名&gt; DROP COLUMN &lt;列名&gt;;</code></li>
+<li>修改列名：<code>ALTER TABLE &lt;表名&gt; CHANGE COLUMN &lt;旧列名&gt; &lt;新列名&gt; &lt;新列的定义&gt;;</code></li>
+</ul>
+
+<p><strong>变更表名</strong></p>
+
+<ul>
+<li>Oracle PostgreSQL：ALTER TABLE Poduct RENAME TO Product;</li>
+<li>DB2：RENAME TABLE Poduct TO Product;</li>
+<li>SQL Server：sp_rename &lsquo;Poduct&rsquo;, &lsquo;Product&rsquo;;</li>
+<li>MySQL： RENAME TABLE Poduct to Product;<br /></li>
+</ul>
+
+<p><strong>向表中插入数据：</strong></p>
+
+<p><code>INSERT INTO 表名 VALUES(值);</code></p>
+    </div>
+
+    
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/sql/">SQL</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/sql02_basic_select/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">SQL基础教程02：查询基础</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://ffhy.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">FFhy</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

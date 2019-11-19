@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on FFhy-学习记录</title>
+    <link>https://ffhy.github.io/categories/</link>
+    <description>Recent content in Categories on FFhy-学习记录</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 16 Nov 2019 22:59:45 +0800</lastBuildDate>
+    
+	<atom:link href="https://ffhy.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Database</title>
+      <link>https://ffhy.github.io/categories/database/</link>
+      <pubDate>Sat, 16 Nov 2019 22:59:45 +0800</pubDate>
+      
+      <guid>https://ffhy.github.io/categories/database/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

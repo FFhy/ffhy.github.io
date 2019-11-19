@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>SQL基础教程06：函数、谓词和CASE表达式 - FFhy-学习记录</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="FFhy" /><meta name="description" content="内容：各种函数、谓词（LIKE, BETWEEN, IN, IS, EXIST）、CASE表达式。
+来源：《SQL基础教程》(第二版) &amp;ensp; [日] MICK/著 &amp;ensp;&amp;ensp; 孙淼 罗勇/译
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1 with theme even" />
+
+
+<link rel="canonical" href="https://ffhy.github.io/post/sql06_fun_case/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="SQL基础教程06：函数、谓词和CASE表达式" />
+<meta property="og:description" content="内容：各种函数、谓词（LIKE, BETWEEN, IN, IS, EXIST）、CASE表达式。
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ffhy.github.io/post/sql06_fun_case/" />
+<meta property="article:published_time" content="2019-11-16T22:59:45+08:00" />
+<meta property="article:modified_time" content="2019-11-16T22:59:45+08:00" />
+<meta itemprop="name" content="SQL基础教程06：函数、谓词和CASE表达式">
+<meta itemprop="description" content="内容：各种函数、谓词（LIKE, BETWEEN, IN, IS, EXIST）、CASE表达式。
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译">
+
+
+<meta itemprop="datePublished" content="2019-11-16T22:59:45&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-16T22:59:45&#43;08:00" />
+<meta itemprop="wordCount" content="1892">
+
+
+
+<meta itemprop="keywords" content="SQL," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SQL基础教程06：函数、谓词和CASE表达式"/>
+<meta name="twitter:description" content="内容：各种函数、谓词（LIKE, BETWEEN, IN, IS, EXIST）、CASE表达式。
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">FFhy</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">FFhy</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">SQL基础教程06：函数、谓词和CASE表达式</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-11-16 </span>
+        <div class="post-category">
+            <a href="/categories/database/"> Database </a>
+            </div>
+          <span class="more-meta"> 约 1892 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#函数">函数</a></li>
+<li><a href="#谓词">谓词</a></li>
+<li><a href="#case表达式">CASE表达式</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>内容：各种函数、谓词（LIKE, BETWEEN, IN, IS, EXIST）、CASE表达式。<br />
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译</p>
+
+<h2 id="函数">函数</h2>
+
+<p><strong>函数的种类：</strong></p>
+
+<ul>
+<li>算术函数（用来进行数值计算的函数）</li>
+<li>字符串函数（用来进行字符串操作的函数）</li>
+<li>日期函数（用来进行日期操作的函数）</li>
+<li>转换函数（用来转换数据类型和值的函数）</li>
+<li>聚合函数（用来进行数据聚合的函数）</li>
+</ul>
+
+<p><strong>算数函数</strong></p>
+
+<ul>
+<li><code>ABS(数值)</code>，取绝对值；</li>
+<li><code>MOD(被除数, 除数)</code>，求余（modulo），SQL Server不支持，其使用 %；</li>
+<li><code>ROUND( 对象数值, 保留小数的位数 )</code>，四舍五入。</li>
+</ul>
+
+<p><strong>字符串函数</strong></p>
+
+<ul>
+<li><code>字符串1 || 字符串2</code> ，拼接，可拼接多个。特例：
+
+<ul>
+<li>MySql：<code>CONCAT()</code>；</li>
+<li>SQL Server：<code>+</code> ，SQL Server2012及之后也可以使用CONCAT()。</li>
+</ul></li>
+<li><code>LENGTH( 字符串)</code>，字符串长度。特例：
+
+<ul>
+<li>SQL Server：<code>LEN()</code>函数。</li>
+<li>注：与半角英文字母占用1字节不同，汉字（全角字符）会占用2个以上的字节。因此，使用MySQL中的LENGTH（以字节为单位的函数）进行计算时，如：“LENGTH(山田)”的返回结果是4。同样是LENGTH函数，不同DBMS的执行结果也不尽相同。MySQL中还存在计算字符串长度的自有函数 <code>CHAR_LENGTH</code>。</li>
+</ul></li>
+<li><code>LOWER( 字符串 )</code> ，小写（只针对英文字母使用，将其转化为小写），<code>UPPER()</code>为大写。</li>
+<li><code>REPLACE(对象字符串, 替换前的字符串, 替换后的字符串)</code>，字符串的替换。</li>
+<li><code>SUBSTRING（对象字符串 FROM 截取的起始位置 FOR 截取的字符数）</code>，字符串截取，只有PostgreSQL和MySQL支持。
+
+<ul>
+<li>SQL Server：<code>SUBSTRING(对象字符串, 截取的起始位置, 截取的字符数)</code></li>
+<li>Oracle和DB2：<code>SUBSTR(对象字符串, 截取的起始位置, 截取的字符数)</code></li>
+</ul></li>
+</ul>
+
+<p><strong>日期函数</strong></p>
+
+<ul>
+<li><code>CURRENT_DATE</code> 返回当前日期。
+
+<ul>
+<li>PostgreSQL，MySQL：SELECT CURRENT_DATE;</li>
+<li>SQL Server：SELECT CAST(CURRENT_TIMESTAMP AS DATE) AS CUR_DATE;</li>
+<li>Oracle：SELECT CURRENT_DATE FROM dual;</li>
+<li>DB2：SELECT CURRENT DATE FROM SYSIBM.SYSDUMMY1;</li>
+</ul></li>
+<li><code>CURRENT_TIME</code>，获取当前时间，其他同CURRENT_DATE一致。</li>
+<li><code>CURRENT_TIMESTAMP</code>，当前的时间和日期，具有CURRENT_DATA + CURRENT_TIME的功能。</li>
+</ul>
+
+<p><strong>转换函数</strong></p>
+
+<ul>
+<li><code>CAST(转换前的值, AS, 想要转换的数据类型)</code>
+
+<ul>
+<li>SQL Server PostgreSQL：SELECT CAST(&lsquo;0001&rsquo; AS INTEGER) AS int_col;</li>
+<li>MySQL：SELECT CAST(&lsquo;0001&rsquo; AS SIGNED INTEGER) AS int_col;</li>
+<li>Oracle：SELECT CAST(&lsquo;0001&rsquo; AS INTEGER) AS int_col FROM DUAL;</li>
+<li>DB2：SELECT CAST(&lsquo;0001&rsquo; AS INTEGER) AS int_col FROM SYSIBM.SYSDUMMY1;</li>
+</ul></li>
+<li><code>COALESCE(数据1, 数据2, 数据3, …… )</code>：将NULL转换为其他值。该函数会返回可变参数中左侧开始第1个不是NULL的值。
+
+<ul>
+<li>例：COALESCE(price, 0)：返回price列，当price的某行值为NULL时返回0。</li>
+</ul></li>
+</ul>
+
+<h2 id="谓词">谓词</h2>
+
+<p>谓词是一种返回真值（TRUE, FALSE, UNKNOWN）的函数。<br />
+主要的谓词有：LIKE, BETWEEN, IS NULL, IS NOT NULL, EXIST。</p>
+
+<p><strong>LIKE 字符串的<code>部分一致</code>查询</strong></p>
+
+<ul>
+<li><code>%</code> 是代表“0 字符以上的任意字符串”的特殊符号；</li>
+<li><code>_</code> 代表任意一个字符。</li>
+</ul>
+
+<p>例：<code>SELECT * FROM SampleLike WHERE strcol LIKE '%ddd';</code>（以ddd结尾）</p>
+
+<p><strong>BETWEEN 范围查询</strong>
+例：<code>SELECT product_name, sale_price FROM Product WHERE sale_price BETWEEN 100 AND 1000;</code></p>
+
+<p><em>BETWEEN的特点就是结果中会包含两个临界值。</em></p>
+
+<p><strong>IS NULL和IS NOT NUUL</strong>：判断是否为NULL</p>
+
+<p><strong>IN(值, &hellip;)</strong>：OR的简洁形式。（还有NOT IN）</p>
+
+<p><strong>使用子查询作为IN谓词的参数</strong><br />
+例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">product_name</span><span class="p">,</span> <span class="n">sale_price</span> <span class="k">FROM</span> <span class="n">Product</span>
+<span class="k">WHERE</span> <span class="n">product_id</span> <span class="k">IN</span> 
+<span class="p">(</span><span class="k">SELECT</span> <span class="n">product_id</span> <span class="k">FROM</span> <span class="n">ShopProduct</span>
+<span class="k">WHERE</span> <span class="n">shop_id</span> <span class="o">=</span> <span class="s1">&#39;000C&#39;</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>EXIST</strong><br />
+例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">product_name</span><span class="p">,</span> <span class="n">sale_price</span> <span class="k">FROM</span> <span class="n">Product</span> <span class="k">AS</span> <span class="n">P</span>
+<span class="k">WHERE</span> <span class="k">EXISTS</span> 
+<span class="p">(</span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ShopProduct</span> <span class="k">AS</span> <span class="n">SP</span>
+<span class="k">WHERE</span> <span class="n">SP</span><span class="p">.</span><span class="n">shop_id</span> <span class="o">=</span> <span class="s1">&#39;000C&#39;</span> <span class="k">AND</span> <span class="n">SP</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">P</span><span class="p">.</span><span class="n">product_id</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>EXIST是只有1个参数的谓词，该参数通常都会是一个子查询。EXIST通常都会使用关联子查询作为参数。<br />
+EXIST只关心记录是否存在，因此返回哪些列都没有关系。EXIST只会判断是否存在满足子查询中WHERE子句指定的条件：“商店编号(shop_id)为&rsquo;000C&rsquo;，商品(Product)表和商店商品(ShopProduct)表中商品编号(product_id)相同”的记录，只有存在这样的记录时才返回真(TRUE)。作为EXIST参数的子查询中经常会使用SELECT * 。<br />
+同样地有NOT EXIST。</p>
+
+<h2 id="case表达式">CASE表达式</h2>
+
+<p>CASE表达式是在区分情况时使用的，这种情况的区分在编程中通常称为<code>条件</code>分支。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CASE</span> <span class="k">WHEN</span> <span class="o">&lt;</span> <span class="err">条件表达式</span> <span class="o">&gt;</span> <span class="k">THEN</span> <span class="o">&lt;</span> <span class="err">表达式</span> <span class="o">&gt;</span>
+<span class="k">WHEN</span> <span class="o">&lt;</span> <span class="err">条件表达式</span> <span class="o">&gt;</span> <span class="k">THEN</span> <span class="o">&lt;</span> <span class="err">表达式</span> <span class="o">&gt;</span>
+<span class="k">WHEN</span> <span class="o">&lt;</span> <span class="err">条件表达式</span> <span class="o">&gt;</span> <span class="k">THEN</span> <span class="o">&lt;</span> <span class="err">表达式</span> <span class="o">&gt;</span>
+<span class="p">...</span>
+<span class="k">ELSE</span> <span class="o">&lt;</span> <span class="err">表达式</span> <span class="o">&gt;</span>
+<span class="k">END</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>我们可以利用CASE表达式将SELECT语句结果中的行和列进行互换。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">product_type</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">sale_price</span><span class="p">)</span> <span class="k">AS</span> <span class="n">sum_price</span>
+<span class="k">FROM</span> <span class="n">Product</span> 
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">product_type</span><span class="p">;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>利用CASE：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">product_type</span> <span class="o">=</span> <span class="s1">&#39; 衣服 &#39;</span> <span class="k">THEN</span> <span class="n">sale_price</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">sum_price_clothes</span><span class="p">,</span>
+<span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">product_type</span> <span class="o">=</span> <span class="s1">&#39; 厨房用具 &#39;</span> <span class="k">THEN</span> <span class="n">sale_price</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">sum_price_kitchen</span><span class="p">,</span>
+<span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">product_type</span> <span class="o">=</span> <span class="s1">&#39; 办公用品 &#39;</span> <span class="k">THEN</span> <span class="n">sale_price</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">sum_price_office</span>
+<span class="k">FROM</span> <span class="n">Product</span><span class="p">;</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/sql/">SQL</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/sql05_complex_select/">
+            <span class="next-text nav-default">SQL基础教程05：复杂查询</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://ffhy.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">FFhy</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

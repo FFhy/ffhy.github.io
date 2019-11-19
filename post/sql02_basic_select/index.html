@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>SQL基础教程02：查询基础 - FFhy-学习记录</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="FFhy" /><meta name="description" content="内容：SELECT语句、DISTINCT、WHERE、算术运算符和比较运算符
+来源：《SQL基础教程》(第二版) &amp;ensp; [日] MICK/著 &amp;ensp;&amp;ensp; 孙淼 罗勇/译
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1 with theme even" />
+
+
+<link rel="canonical" href="https://ffhy.github.io/post/sql02_basic_select/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="SQL基础教程02：查询基础" />
+<meta property="og:description" content="内容：SELECT语句、DISTINCT、WHERE、算术运算符和比较运算符
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ffhy.github.io/post/sql02_basic_select/" />
+<meta property="article:published_time" content="2019-11-15T16:28:23+08:00" />
+<meta property="article:modified_time" content="2019-11-15T16:28:23+08:00" />
+<meta itemprop="name" content="SQL基础教程02：查询基础">
+<meta itemprop="description" content="内容：SELECT语句、DISTINCT、WHERE、算术运算符和比较运算符
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译">
+
+
+<meta itemprop="datePublished" content="2019-11-15T16:28:23&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-15T16:28:23&#43;08:00" />
+<meta itemprop="wordCount" content="828">
+
+
+
+<meta itemprop="keywords" content="SQL," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SQL基础教程02：查询基础"/>
+<meta name="twitter:description" content="内容：SELECT语句、DISTINCT、WHERE、算术运算符和比较运算符
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">FFhy</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">FFhy</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">SQL基础教程02：查询基础</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-11-15 </span>
+        <div class="post-category">
+            <a href="/categories/database/"> Database </a>
+            </div>
+          <span class="more-meta"> 约 828 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#select语句基础">SELECT语句基础</a></li>
+<li><a href="#算术运算符和比较运算符">算术运算符和比较运算符</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>内容：SELECT语句、DISTINCT、WHERE、算术运算符和比较运算符<br />
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译</p>
+
+<h1 id="select语句基础">SELECT语句基础</h1>
+
+<p><strong>列的查询</strong></p>
+
+<p><code>SELECT &lt;列名&gt;，…… FROM &lt;表名&gt;;</code></p>
+
+<ul>
+<li><code>*</code> 号可用来查询全部列。</li>
+<li>可使用<code>AS</code>关键字为列设置别名，别名可以使用中文，使用中文时需要用双引号（&rdquo;）括起来。</li>
+<li>SELECT 子句中不仅可以书写列名，还可以书写常数。</li>
+</ul>
+
+<p><code>SELECT '商品' AS string, 38 AS number, '2009-02-24' AS date, product_id, product_name FROM Product;</code> 它们将与product_id列和product_name 列一起被查询出来，其中string列的值都为&rsquo;商品&rsquo;；number列中的值都为38；date列中的值都为&rsquo;2019-02-24&rsquo;。</p>
+
+<p><strong>从结果中去除重复行 DISTINCT</strong></p>
+
+<p><code>SELECT DISTINCT product_type FROM Product;</code></p>
+
+<p>NULL 也被视为一类数据。DISTINCT 也可以在多列之前使用，此时会将多个列的数据进行组合，将重复（每列值都相同）的数据合并为一条。DISTINCT 关键字只能用在第一个列名之前。</p>
+
+<p><strong>根据WHERE语句选择记录</strong></p>
+
+<p><code>SELECT &lt;列名&gt;, …… FROM &lt;表名&gt; WHERE &lt;条件表达式&gt;;</code></p>
+
+<p>首先通过WHERE 子句查询出符合指定条件的记录，然后再选取出SELECT 语句指定的列。WHERE 子句必须紧跟在FROM 子句之后。</p>
+
+<p><strong>注释</strong></p>
+
+<p>单行：<code>--</code> ；多行：<code>/*  */</code></p>
+
+<h1 id="算术运算符和比较运算符">算术运算符和比较运算符</h1>
+
+<p><strong>算术运算符</strong></p>
+
+<p>加减乘除，SELECT子句中可以使用常数或者表达式，如：<br />
+<code>SELECT product_name, sale_price * 2 AS &quot;sale_price_x2&quot; FROM Product;</code><br />
+所有包含NULL 的计算，结果肯定是NULL。</p>
+
+<p><strong>比较运算符</strong></p>
+
+<p><code>=</code>, <code>&lt;&gt;</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code></p>
+
+<ul>
+<li>可以使用比较运算符对计算结果进行比较。</li>
+<li>字符串类型的数据原则上按照字典顺序进行排序，不能与数字的大小顺序混淆。</li>
+<li>NULL值使用IS NULL和IS NOT NULL运算符。</li>
+</ul>
+
+<p><strong>逻辑运算符</strong></p>
+
+<ul>
+<li><code>NOT</code>取反。</li>
+<li><code>AND、OR</code>，AND运算符的优先级高于OR运算符，可通过括号强化处理。</li>
+<li>真值，真、假和不确定，NULL使用=等比较运算符（除了IS NULL和IS NOT NULL）其真值是不确定（UNKNOWN）</li>
+</ul>
+    </div>
+
+    
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/sql/">SQL</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/sql03_group_sort/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">SQL基础教程03：聚合和排序</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/sql01_database_and_sql/">
+            <span class="next-text nav-default">SQL基础教程01：数据库和SQL</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://ffhy.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">FFhy</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>SQL基础教程04：插入数据 - FFhy-学习记录</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="FFhy" /><meta name="description" content="内容：插入数据、数据删除、数据更新、事务、ACID特性。
+来源：《SQL基础教程》(第二版) &amp;ensp; [日] MICK/著 &amp;ensp;&amp;ensp; 孙淼 罗勇/译
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1 with theme even" />
+
+
+<link rel="canonical" href="https://ffhy.github.io/post/sql04_insert_data/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="SQL基础教程04：插入数据" />
+<meta property="og:description" content="内容：插入数据、数据删除、数据更新、事务、ACID特性。
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ffhy.github.io/post/sql04_insert_data/" />
+<meta property="article:published_time" content="2019-11-16T22:18:54+08:00" />
+<meta property="article:modified_time" content="2019-11-16T22:18:54+08:00" />
+<meta itemprop="name" content="SQL基础教程04：插入数据">
+<meta itemprop="description" content="内容：插入数据、数据删除、数据更新、事务、ACID特性。
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译">
+
+
+<meta itemprop="datePublished" content="2019-11-16T22:18:54&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-16T22:18:54&#43;08:00" />
+<meta itemprop="wordCount" content="1644">
+
+
+
+<meta itemprop="keywords" content="SQL," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SQL基础教程04：插入数据"/>
+<meta name="twitter:description" content="内容：插入数据、数据删除、数据更新、事务、ACID特性。
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">FFhy</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">FFhy</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">SQL基础教程04：插入数据</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-11-16 </span>
+        <div class="post-category">
+            <a href="/categories/database/"> Database </a>
+            </div>
+          <span class="more-meta"> 约 1644 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#数据的插入">数据的插入</a></li>
+<li><a href="#数据的删除">数据的删除</a></li>
+<li><a href="#数据的更新">数据的更新</a></li>
+<li><a href="#事务">事务</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>内容：插入数据、数据删除、数据更新、事务、ACID特性。<br />
+来源：《SQL基础教程》(第二版) &ensp; [日] MICK/著 &ensp;&ensp; 孙淼 罗勇/译</p>
+
+<h2 id="数据的插入">数据的插入</h2>
+
+<p><strong>基本语法</strong></p>
+
+<p><code>INSERT INTO &lt;表名&gt; (列1, 列2, 列3, ……) VALUES (值1, 值2, 值3, ……);</code></p>
+
+<p>原则上，执行一次INSERT语句会插入一行数据。有些RDBMS可多行INSERT：</p>
+
+<p><code>INSERT INTO &lt;表名&gt; VALUES (值清单), (值清单), ..., (值清单);</code></p>
+
+<ul>
+<li>如果插入全部的列则可以省略列名清单，保证值清单与创建表时的列名对应即可。</li>
+<li>插入NULL 值时，可以直接在VALUES子句的值清单中写入NULL。</li>
+<li><em>插入默认值</em>：可以通过在创建表的CREATE TABLE 语句中设置DEFAULT 约束来设定默认值。
+
+<ul>
+<li>显式插入：在VALUES字句中指定DEFAULT关键字。</li>
+<li>隐式插入：INSERT语句中省略设置了默认值的列。</li>
+</ul></li>
+</ul>
+
+<p><strong>从其他表中复制数据</strong><br />
+<code>INSERT … SELECT</code> 语句。<br />
+例：<code>INSERT INTO ProductCopy SELECT * FROM Product;</code></p>
+
+<h2 id="数据的删除">数据的删除</h2>
+
+<p><strong>DROP TABLE语句和DELETE</strong></p>
+
+<ul>
+<li><code>DROP TABLE</code> 语句可以将表完全删除。</li>
+<li>DELETE 语句会留下表（容器），而删除表中的全部数据
+
+<ul>
+<li><code>DELETE FROM &lt;表名&gt;;</code></li>
+</ul></li>
+
+<li><p>指定删除对象的DELETE语句：</p>
+
+<ul>
+<li><code>DELETE FROM &lt;表名&gt; WHERE &lt;条件&gt;;</code></li>
+<li>DELETE 语句中不能使用 GROUP BY、 HAVING和ORDER BY三类子句，而只能使用WHERE子句</li>
+</ul></li>
+
+<li><p><em>舍弃数据</em>：<strong>TRUNCATE</strong>语句，<code>TRUNCATE &lt;表名&gt;;</code>，TRUNCATE 只能删除表中的全部数据，而不能通过 WHERE 子句指定条件来删除部分数据。其处理速度比DELETE 要快得多。</p></li>
+</ul>
+
+<h2 id="数据的更新">数据的更新</h2>
+
+<p><strong>UPDATE语句的基本语法</strong></p>
+
+<p><code>UPDATE &lt;表名&gt;   SET &lt;列名&gt; = &lt;表达式&gt;;</code></p>
+
+<p><strong>指定条件的UPDATE语句</strong></p>
+
+<p><code>UPDATE &lt;表名&gt;   SET &lt;列名&gt; = &lt;表达式&gt; WHERE &lt;条件&gt;;</code></p>
+
+<p>UPDATE 语句的 SET 子句支持同时将多个列作为更新对象。</p>
+
+<h2 id="事务">事务</h2>
+
+<p>事务是对表中数据进行更新的单位。事务就是需要在同一个处理单元中执行的一系列更新处理的集合。</p>
+
+<p><strong>创建事务</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="err">事务开始语句</span><span class="p">;</span>
+<span class="n">DML语句</span><span class="err">①</span><span class="p">;</span> 
+<span class="n">DML语句</span><span class="err">②</span><span class="p">;</span>
+<span class="n">DML语句</span><span class="err">③</span><span class="p">;</span> 
+<span class="p">...</span>     
+<span class="err">事务结束语句</span><span class="p">(</span><span class="n">COMMIT或者ROLLBACK</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>事务开始语句：
+
+<ul>
+<li><em>SQL Server、PostgreSQL</em>： <code>BEGIN TRANSACTION</code></li>
+<li><em>MySQL</em>： <code>START TRANSACTION</code></li>
+<li><em>Oracle、DB2</em>：无</li>
+</ul></li>
+<li>事务结束语句：
+
+<ul>
+<li><code>COMMIT</code></li>
+</ul></li>
+<li><code>ROLLBACK</code>：取消处理</li>
+</ul>
+
+<p>事务并没有标准的开始指令，不同的DBMS会有差别。 实际上，几乎所有的数据库产品的事务都无需开始指令。这是因为大部分情况下，事务在数据库连接建立时就已经悄悄开始了，并不需要用户再明确发出开始指令。例如，使用Oracle时，数据库连接建立之后，第一条SQL语句执行的同时，事务就已经悄悄开始了。 像这样不使用指令而悄悄开始事务的情况下，应该如何区分各个事务呢？通常会有如下两种情况。</p>
+
+<ul>
+<li>每条SQL语句就是一个事务（自动提交模式）</li>
+<li>直到用户执行COMMIT或者ROLLBACK为止算作一个事务</li>
+</ul>
+
+<p>通常DBMS都可以选择其中任意一种模式。默认使用自动提交模式的DBMS有：SQL    Server、PostgreSQL和MySQL等。
+Oracle默认使用第二种方式，事务都是到用户自己执行提交或者回滚指令才会结束。</p>
+
+<p><strong>ACID特性</strong></p>
+
+<p>DBMS的事务都遵循四种特性，将这四种特性的首字母结合起来统称为<code>ACID</code>特性。</p>
+
+<ul>
+<li><em>原子性（Atomicity）</em>：原子性是指在事务结束时，其中所包含的更新处理要么全部执行，要么完全不执行。</li>
+<li><em>一致性（Consistency）</em>：事务中包含的处理要满足数据库提前设置的约束，不合法的SQL会被回滚（其他正常执行）。</li>
+<li><em>隔离性（Isolation）</em>：保证不同事务之间互不干扰的特性。</li>
+<li><em>持久性（Durability）</em>：指的是在事务（不论是提交还是回滚）结束后，DBMS 能够保证该时间点的数据状态会被保存的特性。即使由于系统故障导致数据丢失，数据库也一定能通过某种手段进行恢复。其中最常见的就是将事务 的执行记录保存到硬盘等存储介质中（该执行记录称为日志）。当发生故障时，可以通过日志恢复到故障发生前的状态。</li>
+</ul>
+
+<p>相关博客：<a href="https://www.cnblogs.com/takumicx/p/9998844.html">数据库事务的概念及其实现</a></p>
+    </div>
+
+    
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/sql/">SQL</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/sql05_complex_select/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">SQL基础教程05：复杂查询</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/sql03_group_sort/">
+            <span class="next-text nav-default">SQL基础教程03：聚合和排序</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://ffhy.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">FFhy</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
