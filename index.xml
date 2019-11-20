@@ -26,7 +26,8 @@
       <pubDate>Wed, 20 Nov 2019 00:34:33 +0800</pubDate>
       
       <guid>https://ffhy.github.io/post/python_data_analysis01_numpy/</guid>
-      <description>Numpy基础 ndarray—Numpy的数组对象 比python内建列表处理数据更快且使用内存更少。 ndarray是一个多维、同类型容器。 n</description>
+      <description>&lt;p&gt;内容：Numpy基础。&lt;br /&gt;
+来源：《利用Python进行数据分析》(第二版)&lt;/p&gt;</description>
     </item>
     
     <item>
