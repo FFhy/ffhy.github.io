@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Python on FFhy-学习记录</title>
-    <link>https://ffhy.github.io/tags/python/</link>
-    <description>Recent content in Python on FFhy-学习记录</description>
+    <title>Pandas on FFhy-学习记录</title>
+    <link>https://ffhy.github.io/tags/pandas/</link>
+    <description>Recent content in Pandas on FFhy-学习记录</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sat, 23 Nov 2019 20:14:55 +0800</lastBuildDate>
     
-	<atom:link href="https://ffhy.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ffhy.github.io/tags/pandas/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,16 +18,6 @@
       
       <guid>https://ffhy.github.io/post/python_data_analysis02_pandas/</guid>
       <description>&lt;p&gt;内容：Pandas基础。&lt;br /&gt;
-来源：《利用Python进行数据分析》(第二版)&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>利用Python进行数据分析01：Numpy</title>
-      <link>https://ffhy.github.io/post/python_data_analysis01_numpy/</link>
-      <pubDate>Wed, 20 Nov 2019 00:34:33 +0800</pubDate>
-      
-      <guid>https://ffhy.github.io/post/python_data_analysis01_numpy/</guid>
-      <description>&lt;p&gt;内容：Numpy基础。&lt;br /&gt;
 来源：《利用Python进行数据分析》(第二版)&lt;/p&gt;</description>
     </item>
     

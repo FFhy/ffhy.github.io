@@ -6,10 +6,20 @@
     <description>Recent content in Posts on FFhy-学习记录</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 20 Nov 2019 00:34:33 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 23 Nov 2019 20:14:55 +0800</lastBuildDate>
     
 	<atom:link href="https://ffhy.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>利用Python进行数据分析02：Pandas</title>
+      <link>https://ffhy.github.io/post/python_data_analysis02_pandas/</link>
+      <pubDate>Sat, 23 Nov 2019 20:14:55 +0800</pubDate>
+      
+      <guid>https://ffhy.github.io/post/python_data_analysis02_pandas/</guid>
+      <description>&lt;p&gt;内容：Pandas基础。&lt;br /&gt;
+来源：《利用Python进行数据分析》(第二版)&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>利用Python进行数据分析01：Numpy</title>

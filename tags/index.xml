@@ -6,10 +6,28 @@
     <description>Recent content in Tags on FFhy-学习记录</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 20 Nov 2019 00:34:33 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 23 Nov 2019 20:14:55 +0800</lastBuildDate>
     
 	<atom:link href="https://ffhy.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pandas</title>
+      <link>https://ffhy.github.io/tags/pandas/</link>
+      <pubDate>Sat, 23 Nov 2019 20:14:55 +0800</pubDate>
+      
+      <guid>https://ffhy.github.io/tags/pandas/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://ffhy.github.io/tags/python/</link>
+      <pubDate>Sat, 23 Nov 2019 20:14:55 +0800</pubDate>
+      
+      <guid>https://ffhy.github.io/tags/python/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Numpy</title>
@@ -17,15 +35,6 @@
       <pubDate>Wed, 20 Nov 2019 00:34:33 +0800</pubDate>
       
       <guid>https://ffhy.github.io/tags/numpy/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Python</title>
-      <link>https://ffhy.github.io/tags/python/</link>
-      <pubDate>Wed, 20 Nov 2019 00:34:33 +0800</pubDate>
-      
-      <guid>https://ffhy.github.io/tags/python/</guid>
       <description></description>
     </item>
     
